@@ -4,7 +4,7 @@ const router = express.Router();
 const { OverSpeedAlert } = require('../models/overSpeedAlert');
 
 router.get('/', (req, res) => {
-    res.send('BMS - Smart Ride WebSerivices Working');
+    res.send('Exaride WebSerivices Working');
 });
 
 
