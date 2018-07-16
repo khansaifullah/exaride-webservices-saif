@@ -1,0 +1,2 @@
+{"level":"info","message":"::1 - - [16/Jul/2018:07:14:16 +0000] \"GET / HTTP/1.1\" 200 37 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36\"\n","timestamp":"12:14:16"}
+{"level":"info","message":"::1 - - [16/Jul/2018:07:14:18 +0000] \"GET /favicon.ico HTTP/1.1\" 404 150 \"http://localhost:3000/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36\"\n","timestamp":"12:14:18"}
