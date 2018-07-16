@@ -11,8 +11,8 @@ var request=require("request");
 //package to generate a random number
 var randomize = require('randomatic');
 const {User, validate} = require('../models/user');
-// const { Driver } = require('../models/driver');
-// const Rider  = require('../models/rider');
+const { Driver } = require('../models/driver');
+const Rider  = require('../models/rider');
 const mongoose = require('mongoose');
 const express = require('express');
 var path = require('path');
@@ -20,8 +20,8 @@ var FormData = require('form-data');
 var http = require('http');
 var fs = require('fs');
 const logger = require('../startup/logging');
-// const regCtrl = require('../controller/registrationController');
-// const LocController = require('../controller/locationController');
+const regCtrl = require('../controller/registrationController');
+const LocController = require('../controller/locationController');
 const router = express.Router();
 
 var tempFileName;
@@ -98,7 +98,7 @@ router.post('/verificationcode',function(req,res){
   // let phoneNo = req.query.phoneNo;;
 	console.log("in routes /verificationcode ");
   console.log(reqData);
-  // regCtrl.sendVerificationCode(reqData,res);	
+  regCtrl.sendVerificationCode(reqData,res);	
 
 });
 
@@ -212,5 +212,24 @@ router.post('/profile', upload.fields([{ name: 'image', maxCount: 1}]),
 		
 });
 
+router.post('/updateDriverLoc', function (req, res) {
+
+  if (req.body === undefined || req.body === null) {
+    res.end("Empty Body");
+  }
+  console.log("in routes /updateDriverLoc");
+  var reqData = req.body;
+  LocController.updateDriverLocation(reqData, res);
+});
+
+router.post('/updateLocation', function (req, res) {
+
+  if (req.body === undefined || req.body === null) {
+    res.end("Empty Body");
+  }
+  console.log("in routes /updateLocation");
+  var reqData = req.body;
+  LocController.updateRiderLocation(reqData, res);
+});
 
 module.exports = router; 
