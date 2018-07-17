@@ -259,6 +259,60 @@ router.post('/overSpeedingAlert', async (req, res) => {
 
 });
 
+router.post('/resetPassword', async (req, res) => {                           
+		
+	if(req.body === undefined||req.body === null) {
+    res.end("Empty Body");  
+  }
+  logger.verbose('resetPassword-POST called ');
+
+  let email = req.body.email;
+  let defaultPassword='654321';
+  const user = await User.findOne({email:email});
+  if (user){
+
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(defaultPassword, salt);
+    await user.save();
+  let msg="Your New Password is :  " + defaultPassword;  
+  console.log('MESSAGE : ', msg);   
+  
+  var headers = {
+
+      'Authorization':       'Basic ZmFsY29uLmV5ZTowMzM1NDc3OTU0NA==',
+      'Content-Type':     'application/json',
+      'Accept':       'application/json'
+  }
+
+  // Configure the request
+  var options = {
+      url: 'http://107.20.199.106/sms/1/text/single',
+      method: 'POST',
+      headers: headers,
+
+      json: {
+          'from': 'EXARIDE',
+          'to': user.phone,
+          'text': msg
+      }
+  }
+  // Start the request
+  request(options, function (error, response, body) {
+      if (!error ) {
+          // Print out the response body
+          console.log(body)
+          logger.info('Sucessful Response of SMS API : ' + body );
+      }
+      else{
+          logger.info('Response/Error of SMS API : ' + error );
+      }
+  });
+  
+  }
+    
+  if (!user) return res.status(404).send('There Is No such User Found');
+  res.status(200).jsonp({ status: 'success', message: 'Password Reset Message Sent to Phone.', object: user });
+});
 
 
 module.exports = router; 
