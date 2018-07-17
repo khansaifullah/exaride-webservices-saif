@@ -26,8 +26,8 @@ router.post('/register', async (req, res) => {
     if (admin) return res.status(400).send('Admin already registered.');
 
     admin = new Admin(_.pick(req.body, ['name', 'email', 'password', 'phone']));
-    let shared = new Shared({speedLimit:50.0});
-    await shared.save();
+    // let shared = new Shared({speedLimit:50.0});
+    // await shared.save();
     const salt = await bcrypt.genSalt(10);
     admin.password = await bcrypt.hash(admin.password, salt);
     await admin.save();
