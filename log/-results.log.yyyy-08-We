@@ -5,3 +5,23 @@
 {"level":"info","message":"::1 - - [01/Aug/2018:10:58:15 +0000] \"POST /api/rider HTTP/1.1\" 404 149 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36\"\n","timestamp":"15:58:15"}
 {"level":"info","message":"Rider Added Succesfully with _id:  5b6192564b6f1307cc8e782a","timestamp":"15:58:30"}
 {"level":"info","message":"::1 - - [01/Aug/2018:10:58:30 +0000] \"POST /api/rider HTTP/1.1\" 200 361 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36\"\n","timestamp":"15:58:30"}
+{"level":"info","message":"::1 - - [01/Aug/2018:11:46:56 +0000] \"GET /api/user/myrider HTTP/1.1\" 404 155 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36\"\n","timestamp":"16:46:56"}
+{"level":"info","message":" chkRegisteredRiders, user Id  5b4d894c2ed8400014a2ad99","timestamp":"16:52:51"}
+{"level":"info","message":" chkRegisteredRiders, user Id  5b4d894c2ed8400014a2ad99","timestamp":"16:54:03"}
+{"level":"info","message":"::1 - - [01/Aug/2018:11:54:03 +0000] \"GET /api/users/myrider?id=5b4d894c2ed8400014a2ad99 HTTP/1.1\" 200 63 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36\"\n","timestamp":"16:54:03"}
+{"level":"info","message":" chkRegisteredRiders, user Id  5b4d894c2ed8400014a2ad99","timestamp":"16:54:12"}
+{"level":"info","message":"::1 - - [01/Aug/2018:11:54:12 +0000] \"GET /api/users/myrider?id=5b4d894c2ed8400014a2ad99 HTTP/1.1\" 200 63 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36\"\n","timestamp":"16:54:12"}
+{"level":"info","message":" chkRegisteredRiders, user Id  5b4d894c2ed8400014a2ad99","timestamp":"16:54:35"}
+{"level":"info","message":"::1 - - [01/Aug/2018:11:54:35 +0000] \"GET /api/users/myrider?id=5b4d894c2ed8400014a2ad99 HTTP/1.1\" 200 63 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36\"\n","timestamp":"16:54:35"}
+{"level":"info","message":" chkRegisteredRiders, user Id  5b4d894c2ed8400014a2ad99","timestamp":"16:54:48"}
+{"level":"info","message":"::1 - - [01/Aug/2018:11:54:48 +0000] \"GET /api/users/myrider?id=5b4d894c2ed8400014a2ad99 HTTP/1.1\" 200 63 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36\"\n","timestamp":"16:54:48"}
+{"level":"info","message":" chkRegisteredRiders, user Id  5b4d894c2ed8400014a2ad99","timestamp":"16:55:33"}
+{"level":"info","message":"::1 - - [01/Aug/2018:11:55:36 +0000] \"GET /api/users/myrider?id=5b4d894c2ed8400014a2ad99 HTTP/1.1\" 200 354 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36\"\n","timestamp":"16:55:36"}
+{"level":"info","message":" chkRegisteredRiders, user Id  5b4d894c2ed8400014a2ad98","timestamp":"16:55:51"}
+{"level":"info","message":"::1 - - [01/Aug/2018:11:55:51 +0000] \"GET /api/users/myrider?id=5b4d894c2ed8400014a2ad98 HTTP/1.1\" 200 60 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36\"\n","timestamp":"16:55:51"}
+{"level":"info","message":" chkRegisteredRiders, user Id  5b4d894c2ed8400014a2ad99","timestamp":"17:02:17"}
+{"level":"info","message":"::1 - - [01/Aug/2018:12:02:17 +0000] \"GET /api/users/myrider?id=5b4d894c2ed8400014a2ad99 HTTP/1.1\" 200 354 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36\"\n","timestamp":"17:02:17"}
+{"level":"info","message":" chkRegisteredRiders, user Id  5b4d894c2ed8400014a2ad98","timestamp":"17:04:37"}
+{"level":"info","message":"::1 - - [01/Aug/2018:12:04:37 +0000] \"GET /api/users/myrider?id=5b4d894c2ed8400014a2ad98 HTTP/1.1\" 200 60 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36\"\n","timestamp":"17:04:37"}
+{"level":"info","message":"Rider Added Succesfully with _id:  5b61a5b16853142b6c56237f","timestamp":"17:21:05"}
+{"level":"info","message":"::1 - - [01/Aug/2018:12:21:05 +0000] \"POST /api/rider HTTP/1.1\" 200 361 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36\"\n","timestamp":"17:21:05"}

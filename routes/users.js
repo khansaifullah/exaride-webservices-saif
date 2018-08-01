@@ -232,4 +232,13 @@ router.post('/updateLocation', function (req, res) {
   LocController.updateRiderLocation(reqData, res);
 });
 
+router.get('/myrider', function (req, res) {
+
+  if (req.body === undefined || req.body === null) {
+    res.end("Empty Body");
+  }
+  console.log("in routes /myrider");
+  regCtrl.chkRegisteredRiders(req, res);
+});
+
 module.exports = router; 

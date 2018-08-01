@@ -12,6 +12,7 @@ var randomize = require('randomatic');
 const { User } = require('../models/user');
 const { Driver } = require('../models/driver');
 const Rider  = require('../models/rider');
+const ShiftRequest= require('../models/shiftRequest');
 const Admin = require('../models/admin');
 const mongoose = require('mongoose');
 const express = require('express');
@@ -331,6 +332,23 @@ module.exports.completeProfile = function(req, imageUrl, res) {
 
 exports.chkRegisteredRiders = function (req, res) {
 
+    logger.info(' chkRegisteredRiders, user Id  ' +  req.query.id );
+    var userId= req.query.id;
+    if (userId){
+        var query = { _addedByUserId : userId };
+        Rider.find(query).exec(function(err, riders){
+            if (err){
+                logger.error('Some Error while Finding Rider' + err );
+                res.jsonp({status:"failure", message:"Some Error while Finding Rider", object:[]});
+            }else {
+            res.jsonp({status:"success", message:"List of Riders!", object:riders}); 
+            }
+        });
+    
+    }else {
+        res.jsonp({status:"failure", message:"Provide valid id! ", object:[]});
+    }
+    
 }
 
 exports.registerRider = function (req, res) {
@@ -338,6 +356,7 @@ exports.registerRider = function (req, res) {
     var riderAge = req.body.age;
     var riderGender = req.body.gender; 
     var addedByUserId =req.body.addedByUserId;
+    var shiftId =req.body.shiftId;
 
     let newRider= new Rider({
     
@@ -353,8 +372,24 @@ exports.registerRider = function (req, res) {
             res.jsonp({status:"failure", message:"Some Error while saving Rider", object:[]}); 
         }
         else{
-            logger.info('Rider Added Succesfully with _id:  ' + rider._id);
-            res.jsonp({status:"success", message:"Rider Added Succesfully!", object:rider}); 
+            let shiftRequest= new ShiftRequest({
+    
+                _riderId: rider._id,
+                _shiftId: shiftId,
+                _requestByUserId: addedByUserId
+             
+            });
+            shiftRequest.save(function (err, request) {
+                if (err){
+                    logger.error('Some Error while saving Shift Request' + err );
+                    res.jsonp({status:"failure", message:"Some Error while saving Rider", object:[]}); 
+                }else {
+                    logger.info('Rider Added Succesfully with _id:  ' + rider._id);
+                    res.jsonp({status:"success", message:"Rider Added Succesfully!", object:rider}); 
+                }
+
+            });
+            
         }
     })
 }
