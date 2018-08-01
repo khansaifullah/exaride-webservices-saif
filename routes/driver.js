@@ -274,7 +274,7 @@ router.post('/resetPassword', async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(defaultPassword, salt);
     await user.save();
-  let msg="Your New Password is :  " + defaultPassword;  
+  let msg="Your New Password for Exaride App is :  " + defaultPassword;  
   console.log('MESSAGE : ', msg);   
   
   var headers = {

@@ -17,9 +17,10 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 const NotificationController=require('../controller/PushNotificationController');
+const regCtrl = require('../controller/registrationController');
 const adminAuth = require('../middleware/adminAuth');
 
-router.get('/', adminAuth, async (req, res) => {
+router.get('/', async (req, res) => {
   let listOfRiders = [];
   let ridersResponseObject;
 
@@ -56,6 +57,16 @@ router.get('/', adminAuth, async (req, res) => {
     object: listOfRiders
   });
   
+});
+router.post('/', function (req, res) {
+
+  if (req.body === undefined || req.body === null) {
+    res.end("Empty Body");
+  }
+  console.log("in routes /rider");
+
+  regCtrl.registerRider(req, res);
+
 });
 router.post('/pickuplocation', function (req, res) {
 

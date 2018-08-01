@@ -51,7 +51,7 @@ module.exports = function(app) {
     app.use('/api/routes', routes);
     app.use('/api/shifts', shift);
     app.use('/api/riders', shiftRiders);
-    app.use('/api/riders', riders);
+    app.use('/api/rider', riders);
     app.use('/api/admin', admin);
     app.use('/api/driver', drivers);
     app.use(error);    

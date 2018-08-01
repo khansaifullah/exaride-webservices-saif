@@ -107,11 +107,12 @@ exports.sendVerificationCode = function(reqData, res){
     logger.info('RegistrationController.sendVerificationCode called  :'  + reqData.phoneNo );
     
     var phoneNo = reqData.phoneNo;
-    var resend =reqData.resend
+    var resend =reqData.resend;
 	var code;
 	var verificationMsg;
     var requestUrl;
-    var user_type = 'rider';
+    // var user_type = 'rider';
+    var user_type = 'appUser';
     var newRider;
 	//generate a code and set to user.verification_code
 	code=randomize('0', 4);
@@ -154,7 +155,7 @@ exports.sendVerificationCode = function(reqData, res){
                     headers: headers,
              
                     json: {
-                        'from': 'BMS',
+                        'from': 'Exaride',
                          'to': user.phone,
                          'text':verificationMsg
                       }
@@ -173,19 +174,19 @@ exports.sendVerificationCode = function(reqData, res){
                 });
 
                 
-                let newRider= new Rider({
-                    _userId: user._id
-                });
+                // let newRider= new Rider({
+                //     _userId: user._id
+                // });
 
-                newRider.save(function (err, user) {
-                    if(err){
-                        logger.error('Some Error while saving user' + err );
-                        res.jsonp({status:"failure", message:"Some Error while saving user", object:[]}); 
-                    }
-					else{
-                        console.log('_userId **********  ' + newRider._userId);
-                    }
-                })
+                // newRider.save(function (err, user) {
+                //     if(err){
+                //         logger.error('Some Error while saving user' + err );
+                //         res.jsonp({status:"failure", message:"Some Error while saving user", object:[]}); 
+                //     }
+				// 	else{
+                //         console.log('_userId **********  ' + newRider._userId);
+                //     }
+                // })
             
 				logger.info('User Created With Phone Num ' + phoneNo );
 				res.jsonp({status:"success", message:"Verification code Sent!", object: [] });	 
@@ -326,4 +327,34 @@ module.exports.completeProfile = function(req, imageUrl, res) {
 	}catch (err){
 		logger.info('An Exception Has occured in completeProfile method' + err);
     }
+}
+
+exports.chkRegisteredRiders = function (req, res) {
+
+}
+
+exports.registerRider = function (req, res) {
+    var riderName = req.body.name;
+    var riderAge = req.body.age;
+    var riderGender = req.body.gender; 
+    var addedByUserId =req.body.addedByUserId;
+
+    let newRider= new Rider({
+    
+        _addedByUserId: addedByUserId,
+        name: riderName ,
+        age: riderAge,
+        gender: riderGender
+    });
+
+    newRider.save(function (err, rider) {
+        if(err){
+            logger.error('Some Error while saving Rider' + err );
+            res.jsonp({status:"failure", message:"Some Error while saving Rider", object:[]}); 
+        }
+        else{
+            logger.info('Rider Added Succesfully with _id:  ' + rider._id);
+            res.jsonp({status:"success", message:"Rider Added Succesfully!", object:rider}); 
+        }
+    })
 }

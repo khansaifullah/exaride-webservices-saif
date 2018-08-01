@@ -6,13 +6,17 @@ const Location = require('./location');
 var RiderSchema   = new mongoose.Schema({
 
     _userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    _addedByUserId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     _pickUpLocationId: { type: mongoose.Schema.Types.ObjectId, ref: 'Location'},
     pickupLocName: String,
     last_shared_loc_time: Date,
     active: { type: Boolean, default: false },
     name: String,
+    age:Number,
+    gender: String,
     onesignalid: { type: String, default: null },
     last_notification_time: { type: Date, default: null },
+    requestStatus: { type: String, default: "PENDING" },
 
    
 } , {timestamps: true});
