@@ -135,7 +135,7 @@ router.post('/verifyCode', async (req, res) => {
   let user = await User.findOne({ phone: phoneNo });
   if(user){
     if ((code==="1234") || (code===user.verification_code)){
-      res.jsonp({ status:"success", message:"Code Verified!", object:[]});
+      res.jsonp({ status:"success", message:"Code Verified!", object:user});
     }
     else{
       logger.info('Wrong Code Sent For Verifcation :' + code );
@@ -265,7 +265,7 @@ router.post('/routes', async function (req, res) {
   let shiftRiderRes;
   let shiftRes;
   let tempLocObj;
-  
+
  // finding All shift 
  const shifts = await Shift.find({}).sort('-date');
  if ( !shifts ) return res.status(404).jsonp({ status : "failure", message : "Shift cannot fint by the given ID.", object : []});
