@@ -48,7 +48,7 @@ router.get('/getAllShifts', async (req, res) => {
     let shiftRes;
     let tempLocObj;
 
-    // finding shift for against given driver ID 
+    // finding All shift 
     const shifts = await Shift.find({}).sort('-date');
     if ( !shifts ) return res.status(404).jsonp({ status : "failure", message : "Shift cannot fint by the given ID.", object : []});
     

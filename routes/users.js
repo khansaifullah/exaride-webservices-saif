@@ -13,6 +13,12 @@ var randomize = require('randomatic');
 const {User, validate} = require('../models/user');
 const { Driver } = require('../models/driver');
 const Rider  = require('../models/rider');
+
+const Location = require('../models/location');
+const Shift = require('../models/shift');
+const Shared = require('../models/shared');
+const ShiftRider = require('../models/shiftRider');
+
 const mongoose = require('mongoose');
 const express = require('express');
 var path = require('path');
@@ -239,6 +245,116 @@ router.get('/myrider', function (req, res) {
   }
   console.log("in routes /myrider");
   regCtrl.chkRegisteredRiders(req, res);
+});
+
+router.post('/routes', async function (req, res) {
+
+  if (req.body === undefined || req.body === null) {
+    res.end("Empty Body");
+  }
+  console.log("in routes /shift");
+
+
+  var startLocLat = req.body.startLat;
+  var endLocLat = req.body.endLat;
+  var startLocLong = req.body.startLong;
+  var endLocLong = req.body.endLong;
+  let listOfStops = [];
+  let listOfShifts =  [];
+  let listOfShiftsArray = [];
+  let shiftRiderRes;
+  let shiftRes;
+  let tempLocObj;
+  
+ // finding All shift 
+ const shifts = await Shift.find({}).sort('-date');
+ if ( !shifts ) return res.status(404).jsonp({ status : "failure", message : "Shift cannot fint by the given ID.", object : []});
+ 
+ for(var i = 0; i < shifts.length; i++){
+
+     let shiftRider = await ShiftRider.find({_shiftId: shifts[i]._id});
+     if(!shiftRider) return res.jsonp({ status: "failure", message: "Failed To finding stops!", object: [] });
+     
+     for(var j = 0; j < shiftRider.length; j++){
+         
+         if(shiftRider){
+
+             tempLocObj=await Location.findOne({ _id: shiftRider[j]._stopId });
+             if (tempLocObj){
+                 shiftRiderRes = {
+                     _id: shiftRider[j]._id,
+                     pickUploc: tempLocObj.loc
+                 }
+                 listOfStops.push(shiftRiderRes);
+                 console.log('Stop Id after Getting Stop:  ', tempLocObj._id);
+             }  else{
+                 console.log('temp Loc Obj  ', tempLocObj);
+             } 
+                           
+         }
+     }
+     let startLoc = await Location.findOne({ _id: shifts[i]._startLocId });
+     if(!startLoc) return res.status(404).jsonp({ status : "failure", message : "Location not found by the given ID.", object : []});
+ 
+     let endLoc = await Location.findOne({ _id: shifts[i]._endLocID });
+     if(!endLoc) return res.status(404).jsonp({ status : "failure", message : "Location not found by the given ID.", object : []});
+     
+     console.log('shifts[i]._id', shifts[i]._id);
+     let driver = await Driver.findOne({ _id: shifts[i]._driverId });
+     let user;
+     if (driver){
+          user = await User.findOne({ _id: driver._userId });
+          console.log('user Id', user._id);
+          console.log('Buss Loc', user.loc);
+     }
+     
+     let shiftRiderResForEndLoc = {
+         _id: '',
+         pickUploc: endLoc.loc
+     }
+     listOfStops.push(shiftRiderResForEndLoc);
+     if (user){
+         if (shifts[i].shiftStatus){
+             shiftRes = {
+                 id: shifts[i]._id,
+                 title: shifts[i].title,
+                 busLoc: user.loc,
+                 startLoc: startLoc.loc,
+                 endLoc: endLoc.loc,
+                 listOfStops: listOfStops
+             };
+         }else {
+             shiftRes = {
+                 id: shifts[i]._id,
+                 title: shifts[i].title,
+                 busLoc: [],
+                 startLoc: startLoc.loc,
+                 endLoc: endLoc.loc,
+                 listOfStops: listOfStops
+             };
+         }
+        
+     }else {
+         shiftRes = {
+             id: shifts[i]._id,
+             title: shifts[i].title,
+             busLoc: [],
+             startLoc: startLoc.loc,
+             endLoc: endLoc.loc,
+             listOfStops: listOfStops
+         };
+     }
+   
+     
+     listOfShifts.push(shiftRes);
+     listOfStops = [];  
+ }
+
+  res.jsonp({
+      status : "success",
+      message : "List of Shifts.",
+      object : listOfShifts
+  });
 });
 
 module.exports = router; 
