@@ -10,6 +10,8 @@ const Shift = require('../models/shift');
 const Shared = require('../models/shared');
 const Rider = require('../models/rider');
 const ShiftRider = require('../models/shiftRider');
+const ShiftRequest = require('../models/shiftRequest');
+
 const mongoose = require('mongoose');
 const express = require('express');
 const logger = require('../startup/logging');
@@ -265,8 +267,115 @@ router.post('/', async (req, res) => {
       
 });
 
-router.get('/:Id', async (req, res) => {
-    logger.info('IN SHFTS ROUTES, shifts are find by Driver ID. ', req.params.id)
+//get shift details by rider id
+
+
+router.get('/riderId', async (req, res) => {
+    logger.info('IN SHFTS ROUTES, Find Shift Details BY Rider id:  ', req.query.riderId)
+    let tempLocObj;
+    let shiftRiders;
+    let riderTempObj;
+    let userTempObj;
+    let listOfRiders = [];
+    let riderResObj;
+    let temp= [];
+    let shiftResObj;
+    let listOfShiftRes = [];
+    let userObj;
+    let myDate, myDate1, myDate2, myDate3;
+
+    let shiftRequest = await ShiftRequest.findOne({ _riderId: req.query.riderId });
+    if(!shiftRequest) return res.status(404).jsonp({ status : "failure", message : "No shift record found for this User.", object : []});
+
+    // finding shift for against given shift Id In Shift Request
+    const shift = await Shift.findOne({ _id: shiftRequest._shiftId });
+    if ( !shift ) return res.status(404).jsonp({ status : "failure", message : "Shift cannot fint by the given ID.", object : []});
+        
+        // finding list of riders in shiftriders table
+        shiftRiders = await ShiftRider.find({ _shiftId: shift._id });
+        if ( !shiftRiders ) return res.status(404).jsonp({ status : "failure", message : "The Rider with the given ID was not found.", object : []});
+        
+        for(var j = 0; j < shiftRiders.length; j++){
+            // finding rider with given rider ID 
+            
+            // console.log('pickUpLocName:  ', shiftRiders[j].pickUpLocName);
+             console.log('Stop Id before Getting Stop  ', shiftRiders[j]._stopId);
+            console.log('_id:  ', shiftRiders[j]._id);
+            // console.log('createdAt:  ', shiftRiders[j].createdAt);
+            tempLocObj=await Location.findOne({ _id: shiftRiders[j]._stopId });
+            if (tempLocObj)
+            console.log('Stop Id after Getting Stop:  ', tempLocObj._id);
+            else 
+            console.log('temp Loc Obj  ', tempLocObj);
+            riderTempObj = await Rider.findOne({ _id: shiftRiders[j]._riderId });
+            console.log('Rider Temp object ', riderTempObj);
+            if (tempLocObj){
+
+                riderResObj = {
+                    profile_photo_url: '',
+                    name: '',
+                    pickUploc: tempLocObj.loc,
+                    dropOfLoc: tempLocObj.loc,
+                    pickUpTime: '',
+                    dropOfTime: ''
+                }
+                 listOfRiders.push( riderResObj );
+            }
+
+        }
+        myDate2 = new Date(shift.shiftEndTime);
+        let shiftStartT = myDate2.getTime();
+
+        myDate3 = new Date(shift.shiftStartTime);
+        let shiftEndT = myDate3.getTime();
+
+        const startLocation = await Location.findOne({ _id: shift._startLocId });
+        if(!startLocation) return res.status(404).jsonp({ status : "failure", message : "Start location not found with the given ID.", object : []});
+        
+        const endLocation = await Location.findOne({ _id: shift._endLocID });
+        if(!endLocation) return res.status(404).jsonp({ status : "failure", message : "End Location not found with the given ID.", object : []});
+       
+
+        //Adding  
+       
+       let  riderResObjDropOff = {
+            profile_photo_url: '',
+            name: '',
+            pickUploc: endLocation.loc,
+            dropOfLoc: endLocation.loc,
+            pickUpTime: '',
+            dropOfTime: ''
+        }
+        listOfRiders.push( riderResObjDropOff );
+
+        shiftResObj = {
+            id: shift._id,
+            title: shift.title,
+            startLoc: startLocation.loc,
+            endLoc: endLocation.loc,
+            vehicle: shift.vehicle,
+            shiftStartTime: shiftStartT,
+            shiftEndTime: shiftEndT,
+            listofRiders: listOfRiders
+        }
+        // listOfShiftRes.push( shiftResObj );
+        listOfRiders = [];
+    
+    logger.info('Final shifts response For Rider.');
+    
+    res.jsonp({
+        status : "success",
+        message : "Rider Shift Details.",
+        object : shiftResObj
+    });
+});
+
+
+
+// get list of shifts by driver id
+
+router.get('/:id', async (req, res) => {
+    logger.info('IN SHFTS ROUTES, shifts are find by Driver ID:  ', req.params.id + ' .')
     let tempLocObj;
     let shiftRiders;
     let riderTempObj;
@@ -391,6 +500,8 @@ router.get('/:Id', async (req, res) => {
         object : listOfShiftRes
     });
 });
+
+
 
 router.post('/status', async (req, res) => {
 
