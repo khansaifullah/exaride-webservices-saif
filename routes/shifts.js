@@ -11,7 +11,6 @@ const Shared = require('../models/shared');
 const Rider = require('../models/rider');
 const ShiftRider = require('../models/shiftRider');
 const ShiftRequest = require('../models/shiftRequest');
-
 const mongoose = require('mongoose');
 const express = require('express');
 const logger = require('../startup/logging');
@@ -348,6 +347,13 @@ router.get('/riderId', async (req, res) => {
         }
         listOfRiders.push( riderResObjDropOff );
 
+
+        const driver = await Driver.findOne({ _id: shift._driverId });
+        if(!driver) return res.status(404).jsonp({ status : "failure", message : "Driver not found with the given ID.", object : []});
+       
+        const userDriver = await User.findOne({ _id: driver._userId });
+        if(!userDriver) return res.status(404).jsonp({ status : "failure", message : "User not found with the given ID.", object : []});
+       
         shiftResObj = {
             id: shift._id,
             title: shift.title,
@@ -356,7 +362,8 @@ router.get('/riderId', async (req, res) => {
             vehicle: shift.vehicle,
             shiftStartTime: shiftStartT,
             shiftEndTime: shiftEndT,
-            listofRiders: listOfRiders
+            listofRiders: listOfRiders,
+            driverLoc: userDriver.loc
         }
         // listOfShiftRes.push( shiftResObj );
         listOfRiders = [];

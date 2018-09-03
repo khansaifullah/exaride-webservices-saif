@@ -25,3 +25,9 @@
 {"level":"info","message":"IN SHFTS ROUTES, Find Shift Details BY Rider id:   5b7838b1c3e1bb0014349eba","timestamp":"11:05:23"}
 {"level":"info","message":"Final shifts response For Rider.","timestamp":"11:05:26"}
 {"level":"info","message":"::1 - - [03/Sep/2018:06:05:26 +0000] \"GET /api/shifts/riderId/?riderId=5b7838b1c3e1bb0014349eba HTTP/1.1\" 200 991 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36\"\n","timestamp":"11:05:26"}
+{"level":"info","message":"IN SHFTS ROUTES, Find Shift Details BY Rider id:   5b7838b1c3e1bb0014349eba","timestamp":"16:58:09"}
+{"level":"info","message":"Final shifts response For Rider.","timestamp":"16:58:14"}
+{"level":"info","message":"::1 - - [03/Sep/2018:11:58:14 +0000] \"GET /api/shifts/riderId/?riderId=5b7838b1c3e1bb0014349eba HTTP/1.1\" 200 1009 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36\"\n","timestamp":"16:58:14"}
+{"level":"info","message":"IN SHFTS ROUTES, Find Shift Details BY Rider id:   5b7838b1c3e1bb0014349eba","timestamp":"16:59:52"}
+{"level":"info","message":"Final shifts response For Rider.","timestamp":"16:59:56"}
+{"level":"info","message":"::1 - - [03/Sep/2018:11:59:56 +0000] \"GET /api/shifts/riderId/?riderId=5b7838b1c3e1bb0014349eba HTTP/1.1\" 200 1022 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36\"\n","timestamp":"16:59:56"}
