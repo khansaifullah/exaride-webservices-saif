@@ -10,6 +10,9 @@ var request=require("request");
 const {User, validate} = require('../models/user');
 const { Driver } = require('../models/driver');
 const Rider  = require('../models/rider');
+const ShiftRequest  = require('../models/shiftRequest');
+const Shift  = require('../models/shift');
+
 const logger = require('../startup/logging');
 const LocController = require('../controller/locationController');
 const chatController = require('../controller/chatController');
@@ -129,5 +132,29 @@ router.post('/onesignal', async (req, res) => {
 
 });
 
+
+router.get('/driverLoc', async (req, res) => {
+
+   console.log('Driver loc for  Rider ID ', req.query.riderId);
+  let shiftRequest = await ShiftRequest.findOne({ _riderId: req.query.riderId });
+  if(!shiftRequest) return res.status(404).jsonp({ status : "failure", message : "No shift record found for this User.", object : []});
+
+  // finding shift for against given shift Id In Shift Request
+  const shift = await Shift.findOne({ _id: shiftRequest._shiftId });
+  if ( !shift ) return res.status(404).jsonp({ status : "failure", message : "Shift cannot fint by the given ID.", object : []});
+      
+
+  const driver = await Driver.findOne({ _id: shift._driverId });
+  if(!driver) return res.status(404).jsonp({ status : "failure", message : "Driver not found with the given ID.", object : []});
+ 
+  const userDriver = await User.findOne({ _id: driver._userId });
+  if(!userDriver) return res.status(404).jsonp({ status : "failure", message : "User not found with the given ID.", object : []});
+        
+    res.jsonp({
+      status : "success",
+      message : "Driver Location",
+      object : userDriver.loc
+  });
+});
 
 module.exports = router; 
