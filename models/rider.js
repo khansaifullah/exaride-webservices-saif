@@ -17,7 +17,7 @@ var RiderSchema   = new mongoose.Schema({
     onesignalid: { type: String, default: null },
     last_notification_time: { type: Date, default: null },
     requestStatus: { type: String, default: "PENDING" },
-
+    profilePhotoUrl: { type: String, default: null },
    
 } , {timestamps: true});
 // Export the Mongoose model

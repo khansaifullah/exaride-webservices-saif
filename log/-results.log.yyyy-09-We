@@ -1,0 +1,24 @@
+{"level":"info","message":"File NEW Name  :profilePhoto-1536129951695.jpg","timestamp":"11:45:51"}
+{"level":"info","message":"File Is uploaded","timestamp":"11:45:52"}
+{"level":"info","message":"Error : Error: write ECONNRESET","timestamp":"11:45:52"}
+{"level":"info","message":"::1 - - [05/Sep/2018:06:45:52 +0000] \"POST /api/rider/profile HTTP/1.1\" 200 65 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36\"\n","timestamp":"11:45:52"}
+{"level":"info","message":"File NEW Name  :profilePhoto-1536133515474.jpg","timestamp":"12:45:15"}
+{"level":"info","message":"File Is uploaded","timestamp":"12:45:15"}
+{"level":"info","message":"Rider Added Succesfully with _id:  5b8f898fb0e6a84d18198cfa","timestamp":"12:45:19"}
+{"level":"info","message":"::1 - - [05/Sep/2018:07:45:19 +0000] \"POST /api/rider/profile HTTP/1.1\" 200 360 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36\"\n","timestamp":"12:45:19"}
+{"level":"info","message":"File NEW Name  :profilePhoto-1536133566503.jpg","timestamp":"12:46:06"}
+{"level":"info","message":"File Is uploaded","timestamp":"12:46:06"}
+{"level":"info","message":"Rider Added Succesfully with _id:  5b8f89c07192ea2458f78d88","timestamp":"12:46:09"}
+{"level":"info","message":"::1 - - [05/Sep/2018:07:46:09 +0000] \"POST /api/rider/profile HTTP/1.1\" 200 383 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36\"\n","timestamp":"12:46:09"}
+{"level":"info","message":"File NEW Name  :profilePhoto-1536133644357.jpg","timestamp":"12:47:24"}
+{"level":"info","message":"File Is uploaded","timestamp":"12:47:24"}
+{"level":"info","message":"Error : Error: connect ECONNREFUSED 127.0.0.1:80","timestamp":"12:47:25"}
+{"level":"info","message":"::1 - - [05/Sep/2018:07:47:25 +0000] \"POST /api/rider/profile HTTP/1.1\" 200 65 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36\"\n","timestamp":"12:47:25"}
+{"level":"info","message":"File NEW Name  :profilePhoto-1536133672924.jpg","timestamp":"12:47:52"}
+{"level":"info","message":"File Is uploaded","timestamp":"12:47:52"}
+{"level":"info","message":"Rider Added Succesfully with _id:  5b8f8a2b7b721f3ad0183e93","timestamp":"12:47:56"}
+{"level":"info","message":"::1 - - [05/Sep/2018:07:47:56 +0000] \"POST /api/rider/profile HTTP/1.1\" 200 383 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36\"\n","timestamp":"12:47:56"}
+{"level":"info","message":"File NEW Name  :profilePhoto-1536133848087.jpg","timestamp":"12:50:48"}
+{"level":"info","message":"File Is uploaded","timestamp":"12:50:48"}
+{"level":"info","message":"Rider Added Succesfully with _id:  5b8f8ada443f20463037274d","timestamp":"12:50:50"}
+{"level":"info","message":"::1 - - [05/Sep/2018:07:50:50 +0000] \"POST /api/rider/profile HTTP/1.1\" 200 437 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36\"\n","timestamp":"12:50:50"}

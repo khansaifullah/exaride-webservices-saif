@@ -351,7 +351,7 @@ exports.chkRegisteredRiders = function (req, res) {
     
 }
 
-exports.registerRider = function (req, res) {
+exports.registerRider = function (req,fileUrl, res) {
     var riderName = req.body.name;
     var riderAge = req.body.age;
     var riderGender = req.body.gender; 
@@ -363,7 +363,8 @@ exports.registerRider = function (req, res) {
         _addedByUserId: addedByUserId,
         name: riderName ,
         age: riderAge,
-        gender: riderGender
+        gender: riderGender,
+        profilePhotoUrl: fileUrl
     });
 
     newRider.save(function (err, rider) {
