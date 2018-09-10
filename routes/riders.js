@@ -12,7 +12,7 @@ const { Driver } = require('../models/driver');
 const Rider  = require('../models/rider');
 const ShiftRequest  = require('../models/shiftRequest');
 const Shift  = require('../models/shift');
-
+const DailyTrip  = require('../models/dailyTrip');
 const logger = require('../startup/logging');
 const LocController = require('../controller/locationController');
 const chatController = require('../controller/chatController');
@@ -151,6 +151,85 @@ router.post('/profile',function(req,res){
  
 });
  
+router.post('/trip', function(req, res) {
+
+  if (req.body === undefined || req.body === null) {
+    res.send("Empty Body");
+  }
+  
+  console.log("in routes /trip");
+  var shiftId = req.body.shiftId;
+  var riderId = req.body.riderId;
+  var pickUpTime = req.body.pickUpTime;
+  var dropOffTime = req.body.dropOffTime;
+  
+
+  let dailyTrip= new DailyTrip({
+    
+    _shiftId: shiftId ,
+    _riderId: riderId,
+    isGoing: false ,
+    canceledByRider: true,
+    pickUpTime: pickUpTime,
+    dropOffTime:dropOffTime ,
+});
+
+dailyTrip.save(function (err, dailyTrip) {
+    if(err){
+        logger.error('Some Error Updating Daily Trip Info' + err );
+        res.jsonp({status:"failure", message:"Some Error while Updating Daily Trip Info.", object:[]}); 
+    }else {
+      res.jsonp({
+        status : "success",
+        message : "Trip Info Update",
+        object : dailyTrip
+    });
+
+    }
+  });
+
+});
+
+
+router.post('/cancel/trip', function(req, res) {
+
+  if (req.body === undefined || req.body === null) {
+    res.send("Empty Body");
+  }
+  
+  console.log("in routes cancel/trip");
+  var shiftId = req.body.shiftId;
+  var riderId = req.body.riderId;
+  // var pickUpTime = req.body.pickUpTime;
+  // var dropOffTime = req.body.dropOffTime;
+  
+
+  let dailyTrip= new DailyTrip({
+    
+    _shiftId: shiftId ,
+    _riderId: riderId,
+    isGoing: false ,
+    canceledByRider: true,
+    pickUpTime: null,
+    dropOffTime:null ,
+   
+});
+
+dailyTrip.save(function (err, dailyTrip) {
+    if(err){
+        logger.error('Some Error Updating Daily Trip Info' + err );
+        res.jsonp({status:"failure", message:"Some Error while Updating Daily Trip Info.", object:[]}); 
+    }else {
+      res.jsonp({
+        status : "success",
+        message : "Trip Info Update",
+        object : dailyTrip
+    });
+
+    }
+  });
+
+});
 
 router.post('/pickuplocation', function (req, res) {
 
