@@ -117,7 +117,9 @@ router.post('/profile',function(req,res){
             object:[]});
     }
     else{
-      logger.info ("File Is uploaded");
+      logger.info ("File Is uploaded , file name: " + tempFileName);
+      logger.info ("Phoen num: " + req.body.phone);
+      
       var form = new FormData();
       form.append('image', fs.createReadStream( './/public//images//'+tempFileName));
       form.submit('http://exagic.com/postimage.php', function(err, resp) {
