@@ -96,58 +96,62 @@ router.post('/profile',function(req,res){
   if(req.body === undefined||req.body === null) {
      res.end("Empty Body"); 
      }
- 
- console.log("in routes - profile : " + req.body.phone);
- var upload = multer({
-   storage: storage,
-   fileFilter: function(req, file, callback) {			
-     var ext = path.extname(file.originalname)
-     if (ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg' && ext !== '.PNG' && ext !== '.JPG' && ext !== '.GIF' && ext !== '.JPEG') {
-       return callback(res.end('Only images are allowed'), null)
-     }
-     callback(null, true)
-   }
- }).single('profilePhoto');
- upload(req, res, function(err) {
-   if (err){
-     
-     logger.info("Error Uploading File : " + err);
-     res.jsonp({status:"Failure",
-           message:"Error Uploading File",
-           object:[]});
-   }
-   else{
-     logger.info ("File Is uploaded");
-     var form = new FormData();
-     form.append('image', fs.createReadStream( './/public//images//'+tempFileName));
-     form.submit('http://exagic.com/postimage.php', function(err, resp) {
-      if (err) {
-        logger.info("Error : "+ err);
-        res.jsonp({status:"Failure",
-        message:"Error Uploading File",
-        object:[]});
-      }else {
-       var body = '';
-       resp.on('data', function(chunk) {
-         body += chunk;
-       });
-       resp.on('end', function() {
-         var urls = JSON.parse(body);
-         console.log("File Url : "+urls.imageurl);
-         var fileUrl=urls.imageurl;
-
-
-         //regCtrl.completeProfile(req.body,fileUrl,res);
-         
-        regCtrl.registerRider(req, fileUrl, res);
-
-         tempFileName="";
-        });
+ try {
+  console.log("in routes - profile : " + req.body.phone);
+  var upload = multer({
+    storage: storage,
+    fileFilter: function(req, file, callback) {			
+      var ext = path.extname(file.originalname)
+      if (ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg' && ext !== '.PNG' && ext !== '.JPG' && ext !== '.GIF' && ext !== '.JPEG') {
+        return callback(res.end('Only images are allowed'), null)
       }
-    });
-   }
-   
- })
+      callback(null, true)
+    }
+  }).single('profilePhoto');
+  upload(req, res, function(err) {
+    if (err){
+      
+      logger.info("Error Uploading File : " + err);
+      res.jsonp({status:"Failure",
+            message:"Error Uploading File",
+            object:[]});
+    }
+    else{
+      logger.info ("File Is uploaded");
+      var form = new FormData();
+      form.append('image', fs.createReadStream( './/public//images//'+tempFileName));
+      form.submit('http://exagic.com/postimage.php', function(err, resp) {
+       if (err) {
+         logger.info("Error : "+ err);
+         res.jsonp({status:"Failure",
+         message:"Error Uploading File",
+         object:[]});
+       }else {
+        var body = '';
+        resp.on('data', function(chunk) {
+          body += chunk;
+        });
+        resp.on('end', function() {
+          var urls = JSON.parse(body);
+          console.log("File Url : "+urls.imageurl);
+          var fileUrl=urls.imageurl;
+ 
+ 
+          //regCtrl.completeProfile(req.body,fileUrl,res);
+          
+         regCtrl.registerRider(req, fileUrl, res);
+ 
+          tempFileName="";
+         });
+       }
+     });
+    }
+    
+  })
+ }catch (exception){
+  logger.info ("Exception Occured : " + exception);
+ }
+
  
 });
  
