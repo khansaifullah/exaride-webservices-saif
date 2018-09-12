@@ -119,34 +119,40 @@ router.post('/profile',function(req,res){
     else{
       logger.info ("File Is uploaded , file name: " + tempFileName);
       logger.info ("Phoen num: " + req.body.phone);
-      
-      var form = new FormData();
-      form.append('image', fs.createReadStream( './/public//images//'+tempFileName));
-      form.submit('http://exagic.com/postimage.php', function(err, resp) {
-       if (err) {
-         logger.info("Error : "+ err);
-         res.jsonp({status:"Failure",
-         message:"Error Uploading File",
-         object:[]});
-       }else {
-        var body = '';
-        resp.on('data', function(chunk) {
-          body += chunk;
-        });
-        resp.on('end', function() {
-          var urls = JSON.parse(body);
-          console.log("File Url : "+urls.imageurl);
-          var fileUrl=urls.imageurl;
- 
- 
-          //regCtrl.completeProfile(req.body,fileUrl,res);
-          
-         regCtrl.registerRider(req, fileUrl, res);
- 
-          tempFileName="";
-         });
-       }
-     });
+      try{
+        var form = new FormData();
+        form.append('image', fs.createReadStream( './/public//images//'+tempFileName));
+        form.submit('http://exagic.com/postimage.php', function(err, resp) {
+         if (err) {
+           logger.info("Error : "+ err);
+           res.jsonp({status:"Failure",
+           message:"Error Uploading File",
+           object:[]});
+         }else {
+          var body = '';
+          resp.on('data', function(chunk) {
+            body += chunk;
+          });
+          resp.on('end', function() {
+            var urls = JSON.parse(body);
+            console.log("File Url : "+urls.imageurl);
+            var fileUrl=urls.imageurl;
+   
+   
+            //regCtrl.completeProfile(req.body,fileUrl,res);
+            
+           regCtrl.registerRider(req, fileUrl, res);
+   
+            tempFileName="";
+           });
+         }
+       });
+      }catch(ex){
+        logger.info ("An exception occured in post req" + ex);
+        regCtrl.registerRider(req, '', res);
+
+      }
+
     }
     
   })
