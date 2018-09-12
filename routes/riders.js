@@ -119,7 +119,7 @@ router.post('/profile',function(req,res){
     else{
       logger.info ("File Is uploaded , file name: " + tempFileName);
       logger.info ("Phoen num: " + req.body.phone);
-      try{
+      if (tempFileName!==undefined){
         var form = new FormData();
         form.append('image', fs.createReadStream( './/public//images//'+tempFileName));
         form.submit('http://exagic.com/postimage.php', function(err, resp) {
@@ -147,10 +147,9 @@ router.post('/profile',function(req,res){
            });
          }
        });
-      }catch(ex){
-        logger.info ("An exception occured in post req" + ex);
+      }else {
         regCtrl.registerRider(req, '', res);
-
+   
       }
 
     }
