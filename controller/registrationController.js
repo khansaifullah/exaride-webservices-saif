@@ -334,19 +334,27 @@ exports.chkRegisteredRiders = function (req, res) {
 
     logger.info(' chkRegisteredRiders, user Id  ' +  req.query.id );
     var userId= req.query.id;
+    var ridersToSend = [];
     if (userId){
         var query = { _addedByUserId : userId };
-        Rider.find(query).exec(function(err, riders){
+        Rider.find(query).exec(async function(err, riders){
             if (err){
                 logger.error('Some Error while Finding Rider' + err );
                 res.jsonp({status:"failure", message:"Some Error while Finding Rider", object:[]});
             }else {
-            res.jsonp({status:"success", message:"List of Riders!", object:riders}); 
+                if (riders){
+                    for(var i =0;i <riders.length; i++){
+                        if(riders[i].requestStatus!=="REQUEST_TO_DELETE"){
+                            await ridersToSend.push(riders[i]);
+                        }
+                    }
+                }
+            res.jsonp({status:"success", message:"List of Riders!", object:ridersToSend}); 
             }
         });
     
     }else {
-        res.jsonp({status:"failure", message:"Provide valid id! ", object:[]});
+        res.jsonp({status:"failure", message:"Please Provide valid User Id. ", object:[]});
     }
     
 }

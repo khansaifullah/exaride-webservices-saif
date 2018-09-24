@@ -119,6 +119,7 @@ router.post('/profile',function(req,res){
     else{
       logger.info ("File Is uploaded , file name: " + tempFileName);
       logger.info ("Phoen num: " + req.body.phone);
+      
       if (tempFileName!==undefined){
         var form = new FormData();
         form.append('image', fs.createReadStream( './/public//images//'+tempFileName));
@@ -136,20 +137,14 @@ router.post('/profile',function(req,res){
           resp.on('end', function() {
             var urls = JSON.parse(body);
             console.log("File Url : "+urls.imageurl);
-            var fileUrl=urls.imageurl;
-   
-   
-            //regCtrl.completeProfile(req.body,fileUrl,res);
-            
+            var fileUrl=urls.imageurl;    
            regCtrl.registerRider(req, fileUrl, res);
-   
             tempFileName="";
            });
          }
        });
       }else {
         regCtrl.registerRider(req, '', res);
-   
       }
 
     }
@@ -240,6 +235,27 @@ dailyTrip.save(function (err, dailyTrip) {
     }
   });
 
+});
+
+router.delete('/request/delete',async function(req, res) {
+
+  if (req.body === undefined || req.body === null) {
+    res.send("Empty Body");
+  }
+  
+  console.log("in routes /delete");
+  console.log('Rider ID to delete ', req.query.riderId);
+  var riderId =  req.query.riderId;
+  const rider = await Rider.findOne({ _id: riderId  });
+  
+  rider.requestStatus = "REQUEST_TO_DELETE";
+  await rider.save();
+ 
+  if (!rider) return res.status(404).send('Rider not found by the given ID.');
+
+  res.status(200).jsonp({ status: 'success', message: 'Rider Delete Request Sent ', object: [] });
+
+  
 });
 
 router.post('/pickuplocation', function (req, res) {
